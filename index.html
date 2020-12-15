@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title>Zen Fib</title>
+
+    <style>
+    body {
+      text-align: center;
+      font-family: sans-serif;
+    }
+    input {
+      background-color: #ddddff;
+      margin: 1em;
+      padding: .5em;
+      font-size: 150%;
+      text-align: right;
+    }
+    button {
+      background-color: #ffffdd;
+      color: #880000;
+      padding: 1em;
+      font-size: 110%;
+    }
+    textarea {
+      width: 21em;
+      height: 12em;
+    }
+    a {
+      color: gray !important;
+    }
+    </style>
+  </head>
+  <body>
+    <h1>Zen Fib</h1>
+
+    <input type="text" id="fibn" value="10"><br>
+    <button id=btn>Zen言語でフィボナッチ計算！</button><br>
+    <input type="text" id="ans"><br>
+
+
+    <script type="module">
+    window.onload = async () => {
+      const wasm = await WebAssembly.instantiate(await (await fetch("main.wasm")).arrayBuffer());
+      const ex = wasm.instance.exports;
+      const fib = ex.fib;
+
+      btn.onclick = () => {
+        ans.value = fib(fibn.value);
+      };
+    };
+    </script>
+
+    <textarea disabled=true>
+    export fn fib(n: i32) i32 {
+      if (n &lt;= 1) {
+        return n;
+      } else {
+        return fib(n - 2) + fib(n - 1);
+      }
+    }
+    </textarea><br>
+
+    <a href=https://fukuno.jig.jp/3065>App: 一日一創</a> (<a href=https://github.com/taisukef/zen-wasm-fib>src on GitHub</a>)
+
+  </body>
+</html>

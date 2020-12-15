@@ -1,0 +1,2 @@
+# zen-wasm-fib
+ Zenでフィボナッチ

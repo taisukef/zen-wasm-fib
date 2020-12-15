@@ -1,0 +1,7 @@
+export fn fib(n: i32) i32 {
+  if (n <= 1) {
+    return n;
+  } else {
+    return fib(n - 2) + fib(n - 1);
+  }
+}
